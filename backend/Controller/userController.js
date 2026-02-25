@@ -6,7 +6,8 @@ const bcrypt = require("bcryptjs");
 const createUser=async(req,res)=>{
     try{
 
-        const{name,email,password}=req.body//req.body stores data from frontend
+        const{name,email,password,phone,dob}=req.body//req.body stores data from frontend
+        console.log("REQ BODY:", req.body);
 
         const hashedPassword= await bcrypt.hash(password,10)
 
@@ -15,7 +16,9 @@ const createUser=async(req,res)=>{
         const user=await data.create({ //it will create a table using "data" variable
             name,
             email:email.toLowerCase(),
-            password:hashedPassword
+            password:hashedPassword,
+            phone,
+            dob
         })
 
         res.status(201).json({
